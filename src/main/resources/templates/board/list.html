@@ -72,6 +72,23 @@
       <div class="d-flex justify-content-end mb-4"><a class="btn btn-primary text-uppercase" href="#!">Older Posts →</a></div>
     </div>
   </div>
+
+  <!-- modal -->
+  <div class="modal" tabindex="-1">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body" style="text-align: center; display: flex; flex-direction: column">
+          <img th:src="@{/img/modalcat.png}"/>
+          <span>글이 등록되었다냥!</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
 </div>
 
 <script layout:fragment="script" th:inline="javascript">
@@ -92,5 +109,13 @@
     formObj.submit();
 
   },false)
+
+  const result = [[${result}]]
+
+  const modal = new bootstrap.Modal(document.querySelector(".modal"))
+
+  if(!result){
+    modal.show()
+  }
 
 </script>

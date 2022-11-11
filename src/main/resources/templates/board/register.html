@@ -16,9 +16,8 @@
         <input type="text" name="writer" class="form-control" placeholder="Writer">
       </div>
 
-      <div id="editor" name="content" class="input-group mb-3" style="width : 100%; height: 50vh; overflow:auto">
-        <span class="input-group-text">내용</span>
-      </div>
+      <div id="editor" style=" height: 50vh; overflow:auto"></div>
+      <input type="hidden" id="quill_content" name="content">
 
       <div class="my-4">
         <div class="float-none">
@@ -43,4 +42,23 @@
     },
     theme:'snow'
   });
+
+  quill.on('text-change', function() {
+    document.getElementById("quill_content").value = quill.root.innerHTML;
+  })
+
+  const errors = [[${errors}]]
+  console.log(errors)
+
+  let errorMsg = ''
+
+  if(errors) {
+    for(let i = 0; i < errors.length; i++){
+      errorMsg += `${errors[i].field}은(는) ${errors[i].code}\n`
+    }
+    alert(errorMsg)
+  }
+
+
+
 </script>
