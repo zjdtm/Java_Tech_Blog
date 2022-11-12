@@ -48,6 +48,9 @@ dependencies {
     implementation group: 'nz.net.ultraq.thymeleaf', name: 'thymeleaf-layout-dialect', version: '3.1.0'
     implementation group: 'org.springframework.boot', name: 'spring-boot-starter-validation', version: '2.7.4'
 
+    implementation 'commons-io:commons-io:2.11.0'
+    implementation group:'commons-fileupload', name:'commons-fileupload', version:'1.4'
+
 }
 
 tasks.named('test') {

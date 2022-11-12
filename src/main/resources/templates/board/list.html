@@ -36,13 +36,12 @@
   </div>
 
   <div class="container px-4 px-lg-5">
-    <div class="row gx-4 gx-lg-5 justify-content-center">
+    <div class="row gx-4 gx-lg-5 justify-content-center" th:with="link = ${pageRequestDTO.getLink()}">
       <div class="col-md-10 col-lg-8 col-xl-7" th:each="dto:${responseDTO.dtoList}">
         <!-- Post preview-->
         <div class="post-preview" >
           <a href="post.html">
-            <h2 class="post-title">[[${dto.title}]]</h2>
-            <h3 class="post-subtitle">[[${dto.bno}]]</h3>
+            <h2 class="post-title"><a th:href="|@{/board/read(bno=${dto.bno})}&${link}|">[[${dto.title}]]</a></h2>
           </a>
           <p class="post-meta">
             Posted by
@@ -114,7 +113,7 @@
 
   const modal = new bootstrap.Modal(document.querySelector(".modal"))
 
-  if(!result){
+  if(result){
     modal.show()
   }
 
