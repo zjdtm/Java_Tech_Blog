@@ -12,13 +12,13 @@
     <div class="container position-relative px-4 px-lg-5">
       <div class="row gx-4 gx-lg-5 justify-content-center">
         <div class="col-md-10 col-lg-8 col-xl-7">
-          <div class="post-heading">
-            <h1>[[${dto.title}]]</h1>
-            <span class="meta">
-            Posted by
-            <a href="#!">[[${dto.writer}]]</a>
-            [[${#temporals.format(dto.regDate, 'yyyy-MM-dd HH:mm:ss')}]]
-            </span>
+          <div class="post-heading" th:style="'height : 40vh; text-align: center; color:white; padding : 100px;'">
+            <h1 th:style="'color : white; font-size : 70px;'">[[${dto.title}]]</h1>
+            <small th:style="'color : white; font-size : 20px;'">
+              <span class="meta">
+              [[${dto.writer}]]&nbsp; [[${#temporals.format(dto.regDate, 'yyyy-MM-dd')}]]
+              </span>
+            </small>
           </div>
         </div>
       </div>
