@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/basic.html}">
+<head>
+  <title>Board read</title>
+</head>
+
+<div layout:fragment="header">
+  <!-- Page Header-->
+  <header class="masthead" th:style="'background-image:url(' + @{/img/post-bg.jpg} + ');'">
+    <div class="container position-relative px-4 px-lg-5">
+      <div class="row gx-4 gx-lg-5 justify-content-center">
+        <div class="col-md-10 col-lg-8 col-xl-7">
+          <div class="post-heading">
+            <h1>[[${dto.title}]]</h1>
+            <span class="meta">
+            Posted by
+            <a href="#!">[[${dto.writer}]]</a>
+            [[${#temporals.format(dto.regDate, 'yyyy-MM-dd HH:mm:ss')}]]
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+</div>
+<!-- Post Content-->
+
+<article class="mb-4" layout:fragment="content">
+  <form th:action="@{/board/modify}" method="post" id="f1">
+    <div class="my-4" style="text-align: center;">
+      <button type="button" class="modifyBtn btn btn-outline-dark mr-md-3 mb-2 mb-md-0" >수정</button>
+      <button type="button" class="removeBtn btn btn-outline-danger mr-md-3 mb-2 mb-md-0">삭제</button>
+      <div class="input-group" style="width: 80%; margin : 0 auto">
+        <span class="input-group-text">제목</span>
+        <input type="text" name="title" class="form-control" placeholder="제목">
+        <input type="hidden" name="bno" class="form-control" th:value="${dto.bno}">
+        <input type="hidden" name="writer" class="form-control" th:value="${dto.writer}">
+      </div>
+    </div>
+    <div class="container px-4 px-lg-5">
+      <div class="row gx-4 gx-lg-5 justify-content-center">
+        <div id="editor" style=" height: 50vh; overflow:auto" th:utext="${dto.content}"/>
+        <input type="hidden" id="quill_content" name="content" th:value="${dto.content}">
+      </div>
+    </div>
+  </form>
+</article>
+
+<script layout:fragment="script" th:inline="javascript">
+  var quill = new Quill('#editor',{
+    modules : {
+      toolbar : [
+        [{header : [1,2,false]}],
+        ['bold', 'italic', 'underline'],
+        ['image', 'blockquote'],
+        [{list : 'ordered'}, {list : 'bullet'}]
+      ]
+    },
+    theme:'snow'
+  });
+
+  quill.on('text-change', function() {
+    document.getElementById("quill_content").value = quill.root.innerHTML;
+  });
+
+  const errors = [[${errors}]]
+  console.log(errors)
+
+  let errorMsg = ''
+  if(errors){
+    for(let i = 0; i < errors.length; i++){
+      errorMsg += `${errors[i].field}은(는) ${errors[i].code}\n`
+    }
+    history.replaceState({},null, null)
+    alert(errorMsg)
+  }
+
+  const link = [[${pageRequestDTO.getLink()}]]
+  const formObj = document.querySelector("#f1")
+
+  document.querySelector(".modifyBtn").addEventListener("click", function (e){
+    e.preventDefault()
+    e.stopPropagation()
+
+    formObj.action = `/board/modify?${link}`
+    formObj.method = 'post'
+    formObj.submit()
+
+  },false)
+
+  document.querySelector(".removeBtn").addEventListener("click", function (e){
+    e.preventDefault()
+    e.stopPropagation()
+
+    formObj.action = `/board/remove`
+    formObj.method = 'post'
+    formObj.submit()
+  },false)
+</script>

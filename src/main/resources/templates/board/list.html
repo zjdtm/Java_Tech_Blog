@@ -40,12 +40,9 @@
       <div class="col-md-10 col-lg-8 col-xl-7" th:each="dto:${responseDTO.dtoList}">
         <!-- Post preview-->
         <div class="post-preview" >
-          <a href="post.html">
-            <h2 class="post-title"><a th:href="|@{/board/read(bno=${dto.bno})}&${link}|">[[${dto.title}]]</a></h2>
-          </a>
-          <p class="post-meta">
-            Posted by
-            <a href="#!">[[${dto.writer}]]</a>
+            <h2 class="post-title"><a style="text-decoration: none" th:href="|@{/board/read(bno=${dto.bno})}&${link}|" >[[${dto.title}]]</a></h2>
+            <p class="post-meta">
+            [[${dto.writer}]]
             [[${#temporals.format(dto.regDate, 'yyyy-MM-dd')}]]
           </p>
         </div>
@@ -81,7 +78,7 @@
         </div>
         <div class="modal-body" style="text-align: center; display: flex; flex-direction: column">
           <img th:src="@{/img/modalcat.png}"/>
-          <span>글이 등록되었다냥!</span>
+          <span th:text="${result == 'removed' ? '글이 삭제되었다냥' : '글이 등록되었다냥' }"></span>
         </div>
       </div>
     </div>

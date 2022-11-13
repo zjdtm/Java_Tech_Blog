@@ -46,44 +46,6 @@
   quill.on('text-change', function() {
     document.getElementById("quill_content").value = quill.root.innerHTML;
   });
-  // quill.getModule('toolbar').addHandler('image', function () {
-  //   selectLocalImage();
-  // });
-  //
-  // function selectLocalImage() {
-  //
-  //   const fileInput = doucment.createElement("input");
-  //   fileInput.setAttribute("type", 'file');
-  //   console.log('input.type' + fileInput.type);
-  //
-  //   fileInput.click();
-  //
-  //   fileInput.addEventListener("change", function() {
-  //     const formData = new FormData();
-  //     const file = fileInput.files[0];
-  //     formData.append('uploadFile', file);
-  //
-  //     $.ajax({
-  //       type : 'post',
-  //       enctype : 'multipart/form-data',
-  //       url : '/board/register/imageUpload',
-  //       data : formData,
-  //       processData : false,
-  //       contentType : false,
-  //       dataType : 'json',
-  //       success : function(data){
-  //         const range = quill.getSelection();
-  //         data.uploadPath = data.uploadPath.replace(/\\/g,'/');
-  //
-  //         quill.insertEmbed(range.index, 'image', "/board/read?fileName=" + data.uploadPath + "/" + data.uuid + "_" + data.fileName);
-  //       },
-  //       error : function(e){
-  //         console.log(e);
-  //       }
-  //     });
-  //   });
-  //
-  // }
 
   const errors = [[${errors}]]
   console.log(errors)
