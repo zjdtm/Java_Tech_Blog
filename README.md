@@ -70,24 +70,33 @@
 ```
 # :pencil: Tech Stack
 <div>
-  <img align=top src="https://user-images.githubusercontent.com/35757620/201510497-2ef19aef-4bdf-4456-a013-f8f7c98c3d37.png" width="100px"/>
-  <img align=top src="https://user-images.githubusercontent.com/35757620/201510591-7adc9eb9-c4d9-4f10-ac34-95b611a3fbae.png" width="100px"/>
-  <img align=top src="https://user-images.githubusercontent.com/35757620/201510977-b730d064-94fe-4649-9b20-1ea5235162bc.png" width="100px"/>
-  <img align=top src="https://user-images.githubusercontent.com/35757620/201511004-7142976a-e9ce-432d-984a-9d8a639e8ffe.svg" width="100px"/>
-  <img align=top src="https://user-images.githubusercontent.com/35757620/201511959-274714bb-ec63-4fc2-824e-cafb3cde922c.svg" width="100px" height="100px"/>
+  <img src="https://img.shields.io/badge/Java-007396?style=flat&logo=OpenJDK&logoColor=white"/>
+  <img src="https://img.shields.io/badge/Spring Boot-6DB33F?style=flat&logo=Spring Boot&logoColor=green"/>
+  <img src="https://img.shields.io/badge/MySQL-4479A1?style=flat&logo=MySQL&logoColor=white"/>
 </div>
 
-# :nut_and_bolt: Tool 
+# :nut_and_bolt: Tool
 <div>
-   <img align=top src="https://user-images.githubusercontent.com/35757620/201511047-8dbcb973-4566-4ea1-9232-6d293903a721.png" width="100px"/>
+  <img src="https://img.shields.io/badge/IntelliJ IDEA-000000?style=flat&logo=IntelliJ IDEA&logoColor=white"/>
+  <img src="https://img.shields.io/badge/Bootstrap-7952B3?style=flat&logo=Bootstrap&logoColor=white"/>
 </div>
 
-프로젝트를 진행하면서 발생한 문제점들
-quill editor를 사용한 html 태그들이 그대로 나오는 현상
-quill editor 이미지 처리 문제
+# :bomb: ERRORS
+ ## **Quill editor**문제점들
+ ### html 태그들의 그대로 적용되던 문제점
+<img src="https://user-images.githubusercontent.com/35757620/201845835-f4a91fa8-ad94-434e-a2a6-f28c37c6e2be.jpg" width="100%" height="50%"/>
+<img src="https://user-images.githubusercontent.com/35757620/201847844-8be60417-2720-4773-bb66-56438c43ec2e.png" width="100%" height="50%"/>
+
+검색해본 결과 dangerouslySetInnerHTML 이라는 속성을 이용하면 해결이 가능 하지만 Thymeleaf에 th:utext 라는 속성을 사용해도 같은 효과를
+볼 수 있다고 한다.
+
+<img src="https://user-images.githubusercontent.com/35757620/201848973-4ef73bf5-d2d6-48cf-9925-faa87199a34c.png" width="70%" height="50%"/>
+출처 : Thymeleaf 홈페이지(https://www.thymeleaf.org/doc/tutorials/3.0/usingthymeleaf.html#what-is-thymeleaf)
+
+### Quill 이미지 파일 길이 수정
+
 
 
 4. 프로젝트 설치 및 실행 방법
 
 5. 프로젝트 사용 방법
-
