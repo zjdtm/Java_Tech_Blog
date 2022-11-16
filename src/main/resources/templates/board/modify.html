@@ -65,6 +65,37 @@
     document.getElementById("quill_content").value = quill.root.innerHTML;
   });
 
+  quill.getModule('toolbar').addHandler('image', function(){
+    const fileInput = document.createElement('input');
+    fileInput.setAttribute('type', 'file');
+    console.log("input.type " + fileInput.type);
+
+    fileInput.click();
+
+    fileInput.addEventListener("change", function(){
+      const formData = new FormData();
+      const file = fileInput.files[0];
+      formData.append('uploadFile', file);
+
+      $.ajax({
+        type : 'post',
+        enctype : 'multipart/form-data',
+        url : '/quillUpload',
+        data : formData,
+        dataType : "json",
+        processData : false,
+        contentType : false,
+        success : function(data){
+          const range = quill.getSelection();
+          quill.insertEmbed(range.index, 'image', "/display?fileName="+data.link);
+        },
+        error : function(e){
+          console.log(e);
+        }
+      })
+    })
+  });
+
   const errors = [[${errors}]]
   console.log(errors)
 

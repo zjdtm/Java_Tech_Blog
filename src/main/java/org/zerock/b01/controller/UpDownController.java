@@ -8,9 +8,12 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.FileSystemResource;
 import org.springframework.core.io.Resource;
 import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.util.FileCopyUtils;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import org.zerock.b01.dto.upload.UploadFileDTO;
 import org.zerock.b01.dto.upload.UploadResultDTO;
 
@@ -28,6 +31,59 @@ public class UpDownController {
 
     @Value("${org.zerock.upload.path}")
     private String uploadPath;
+
+    @PostMapping(value = "/quillUpload", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    public UploadResultDTO quillUpload(@RequestParam("uploadFile") MultipartFile multipartFile) {
+        log.info(multipartFile);
+
+        String uuid = UUID.randomUUID().toString();
+        String originalFilename = multipartFile.getOriginalFilename();
+
+        String quillImage = null;
+        if (!multipartFile.isEmpty()) {
+
+            File saveFile = new File(uploadPath,  uuid + "_" + originalFilename);
+            quillImage = saveFile.toString();
+            try {
+                multipartFile.transferTo(saveFile);
+            } catch (Exception e) {
+                log.info(e);
+            }
+        }
+
+        UploadResultDTO result = UploadResultDTO.builder()
+                .uuid(uuid)
+                .fileName(originalFilename)
+                .build();
+
+        return result;
+    }
+
+    @ResponseBody
+    @GetMapping(value = "/display")
+    public ResponseEntity<byte[]> quillUploadImageGET(@RequestParam("fileName") String fileName){
+
+        log.info("Controller quillUploadImageGET");
+
+        log.info("fileName : " + fileName);
+
+        File file = new File("C:\\upload\\"+fileName);
+
+        ResponseEntity<byte[]> result = null;
+
+        try {
+
+            HttpHeaders header = new HttpHeaders();
+
+            header.add("Content-type", Files.probeContentType(file.toPath()));
+
+            result = new ResponseEntity<>(FileCopyUtils.copyToByteArray(file), header, HttpStatus.OK);
+
+        }catch (IOException e){
+            e.printStackTrace();
+        }
+        return result;
+    }
 
     @ApiOperation(value = "Upload POST", notes="POST 방식으로 파일 등록")
     @PostMapping(value = "/upload", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
