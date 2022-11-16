@@ -82,8 +82,8 @@
 </div>
 
 # :bomb: ERRORS
- ## **Quill editor**문제점들
- ### html 태그들의 그대로 적용되던 문제점
+ ## **Quill editor** 에러들
+ + ### html 태그들의 그대로 적용되던 문제점
 <img src="https://user-images.githubusercontent.com/35757620/201845835-f4a91fa8-ad94-434e-a2a6-f28c37c6e2be.jpg" width="100%" height="50%"/>
 <img src="https://user-images.githubusercontent.com/35757620/201847844-8be60417-2720-4773-bb66-56438c43ec2e.png" width="100%" height="50%"/>
 
@@ -93,8 +93,27 @@
 <img src="https://user-images.githubusercontent.com/35757620/201848973-4ef73bf5-d2d6-48cf-9925-faa87199a34c.png" width="70%" height="50%"/>
 출처 : Thymeleaf 홈페이지(https://www.thymeleaf.org/doc/tutorials/3.0/usingthymeleaf.html#what-is-thymeleaf)
 
-### Quill 이미지 파일 길이 수정
+<hr>
 
+ + ### Quill 이미지 파일 길이 수정
+
+<img src="https://user-images.githubusercontent.com/35757620/202071606-6e522c89-3a7e-41a3-b699-12fd5eb575d9.png" width="70%" height="50%"/>
+quill editor에 이미지 한 개를 넣으면 이런식으로 긴 문자열인 상태로 변환되기 때문에 데이터베이스에 길이가 초과되어 에러가 발생한다.
+
+![image](https://user-images.githubusercontent.com/35757620/202122702-a25b17a8-594a-432a-85f1-d5c9ef376e28.png)
+![image](https://user-images.githubusercontent.com/35757620/202122929-5b0d412b-3c81-41bc-8c1e-bede7fb64b00.png)
+
+content에 타입을 **text**로 바꾸어도 여러 개의 이미지를 넣으면 에러가 발생한다.
+
+### :mag: https://myeongdev.tistory.com/49 블로그를 참고하였다.
+quill-editor에 작성한 이미지는 ajax를 사용해 서버에 미리 저장 하고 저장된 이미지를 불러오는 것이다.
+![image](https://user-images.githubusercontent.com/35757620/202124224-3314c610-7266-4976-adba-659ef09f026b.png)
+![image](https://user-images.githubusercontent.com/35757620/202124354-6e898c7c-308b-4cb8-952e-2f4a1826e051.png)
+![image](https://user-images.githubusercontent.com/35757620/202124490-5b4f4a50-dc8d-4f4a-bee1-8079c31fc5bb.png)
+
+게시물을 등록하는것은 해결 했지만 수정시에는 서버에 저장된 이미지도 같이 삭제 해야 하는데 이건 좀 더 공부 해보고 해결해보겠습니다.
+
+<hr>
 
 
 4. 프로젝트 설치 및 실행 방법
