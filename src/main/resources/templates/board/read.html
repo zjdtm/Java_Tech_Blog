@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-srpingsecurity5"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{layout/basic.html}">
 <head>
@@ -26,9 +27,9 @@
   </header>
 </div>
 <!-- Post Content-->
-<article class="mb-4" layout:fragment="content">
+<article class="mb-4" th:with="user=${#authentication.principal}" layout:fragment="content">
   <div class="container px-4 px-lg-5" th:with="link = ${pageRequestDTO.getLink()}">
-    <a th:href="|@{/board/modify(bno=${dto.bno})}&${link}|" class="text-decoration-none">
+    <a th:if="${user != null && user.username == dto.writer}" th:href="|@{/board/modify(bno=${dto.bno})}&${link}|" class="text-decoration-none">
       <button type="button" style="float : right" class="modifyBtn btn btn-outline-dark mr-md-3 mb-2 mb-md-0" >수정</button>
     </a>
     <div class="row gx-4 gx-lg-5 justify-content-center">
@@ -44,9 +45,9 @@
           </div>
           <div class="mt-3 d-flex flex-row justify-content-center p-3 form-color">
             <img src="https://i.imgur.com/zQZSWrt.jpg" class="rounded-circle mr-2">
-            <div class="mt-3 w-50 d-flex flex-column justify-center">
-              <input type="text" th:style = "'width : 70%;'" class="form-control replyer" placeholder="Enter your replyer">
-              <input type="text" th:style = "'width : 100%;'" class="form-control replyText" placeholder="Enter your comment...">
+            <div class="mt-3 w-50 d-flex flex-column justify-center" th:with="user=${#authentication.principal}">
+              <input type="text" th:style = "'width : 70%;'" class="form-control replyer" th:value="${user.username}" readonly>
+              <input type="text" th:style = "'width : 100%;'" class="form-control replyText" placeholder="댓글을 입력하세요">
             </div>
             <button type="button" class="btn btn-outline-dark registerBtn w-40 h-25">등록</button>
           </div>
@@ -84,6 +85,10 @@
 
   const bno = [[${dto.bno}]]
 
+  const currentUser = [[${#authentication.principal.username}]]
+
+  let hasAuth = false
+
   const replyList = document.querySelector('.replyList')
 
   function printList(dtoList){
@@ -109,6 +114,7 @@
                   <p data-rno = ${dto.rno} class="text-justify comment-text mb-0 border-0 modifyText" style="width : 80%">
                   ${dto.replyText}
                   </p>
+                  <small><---댓글 수정시 댓글을 입력해주세요</small>
                 </div>
               </div>
             </div>
@@ -171,10 +177,12 @@
 
     getReply(rno).then(reply => {
 
-      console.log(reply)
       replyHeader.innerHTML = reply.rno
       modifyText.value = reply.replyText
       modifyModal.show()
+
+      hasAuth = currentUser === reply.replyer
+      console.log(reply.replyer);
 
     }).catch(e => console.log(e))
 
@@ -182,6 +190,12 @@
   },false)
 
   replyModifyBtn.addEventListener("click", function(e) {
+
+    if(!hasAuth){
+      alert("댓글 작성자만 수정이 가능합니다.")
+      modifyModal.hide()
+      return
+    }
 
     if(modifyText.value === ""){
       alert("비어 있을 수 없습니다")
@@ -204,6 +218,12 @@
 
 
   replyRemoveBtn.addEventListener("click", function(e) {
+
+    if(!hasAuth){
+      alert("댓글 작성자만 삭제가 가능합니다.")
+      modifyModal.hide()
+      return
+    }
 
     removeReply(replyHeader.innerHTML).then(result => {
       modifyModal.hide()

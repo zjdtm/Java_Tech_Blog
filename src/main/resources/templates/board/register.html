@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{layout/basic.html}">
 
@@ -28,7 +29,7 @@
 
       <div class="input-group mb-3 style">
         <span class="input-group-text">작성자</span>
-        <input type="text" name="writer" class="form-control" placeholder="작성자">
+        <input type="text" name="writer" class="form-control" placeholder="작성자" th:value="${#authentication.principal.username}" readonly>
       </div>
 
       <div id="editor" style=" height: 50vh; overflow:auto"></div>
@@ -76,12 +77,16 @@
     </div>
   </div>
 
-  <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+<!--  <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>-->
 
   <script src="/js/upload.js"></script>
 </div>
 
 <script layout:fragment="script" th:inline="javascript">
+
+  const errors = [[${errors}]]
+  console.log(errors)
+
   var quill = new Quill('#editor',{
     modules : {
       toolbar : [
@@ -130,9 +135,6 @@
     })
   });
 
-
-  const errors = [[${errors}]]
-  console.log(errors)
 
   let errorMsg = ''
 
@@ -228,5 +230,7 @@
 
     document.querySelector("form").submit();
   },false)
+
+
 
 </script>
