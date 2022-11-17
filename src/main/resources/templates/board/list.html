@@ -37,18 +37,23 @@
     <div class="row gx-4 gx-lg-5 justify-content-center" th:with="link = ${pageRequestDTO.getLink()}">
       <div class="col-md-10 col-lg-8 col-xl-7" th:each="dto:${responseDTO.dtoList}">
         <!-- Post preview-->
-        <div class="post-preview" th:style="'display : flex; flex-direction : column;'">
-            <h2 class="post-title" th:style = "'width : 100%'">
-              <a style="text-decoration: none" th:href="|@{/board/read(bno=${dto.bno})}&${link}|" >
-                [[${dto.title}]]
-              </a>
-            </h2>
-            <p class="post-meta" th:style = "'margin : 10px;'">
-              [[${dto.writer}]]
-              [[${#temporals.format(dto.regDate, 'yyyy-MM-dd')}]]
-              <i class="fa-solid fa-comment-dots">[[${dto.replyCount}]]</i>
-            </p>
-
+        <div class="post-preview" th:style="'display : flex;'">
+            <div th:if="${dto.boardImages != null && dto.boardImages.size() > 0}">
+              <img style="width:100px" th:each="boardImage : ${dto.boardImages}"
+                   th:src="|/view/s_${boardImage.uuid}_${boardImage.fileName}|">
+            </div>
+            <div th:style="'flex-direction : column;'">
+              <h2 class="post-title" th:style = "'width : 100%'">
+                <a style="text-decoration: none" th:href="|@{/board/read(bno=${dto.bno})}&${link}|" >
+                  [[${dto.title}]]
+                </a>
+              </h2>
+              <p class="post-meta" th:style = "'margin : 10px;'">
+                [[${dto.writer}]]
+                [[${#temporals.format(dto.regDate, 'yyyy-MM-dd')}]]
+                <i class="fa-solid fa-comment-dots">[[${dto.replyCount}]]</i>
+              </p>
+            </div>
         </div>
         <!-- Divider-->
         <hr class="my-4" />
@@ -72,23 +77,6 @@
       <div class="d-flex justify-content-end mb-4"><a class="btn btn-primary text-uppercase" href="#!">Older Posts →</a></div>
     </div>
   </div>
-
-  <!-- modal -->
-  <div class="modal" tabindex="-1">
-    <div class="modal-dialog">
-      <div class="modal-content">
-        <div class="modal-header">
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-        </div>
-        <div class="modal-body" style="text-align: center; display: flex; flex-direction: column">
-          <img th:src="@{/img/modalcat.png}"/>
-          <span th:text="${result == 'removed' ? '글이 삭제되었다냥' : '글이 등록되었다냥' }"></span>
-        </div>
-      </div>
-    </div>
-  </div>
-
-
 </div>
 
 <script layout:fragment="script" th:inline="javascript">
@@ -109,13 +97,5 @@
     formObj.submit();
 
   },false)
-
-  const result = [[${result}]]
-
-  const modal = new bootstrap.Modal(document.querySelector(".modal"))
-
-  if(result){
-    modal.show()
-  }
 
 </script>
