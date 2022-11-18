@@ -1,0 +1,73 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:fragment="~{layout/basic.html}">
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link href="https://fonts.googleapis.com/css?family=Roboto:300,400&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="/fonts/icomoon/style.css">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+
+    <!-- Style -->
+    <link rel="stylesheet" href="/css/style.css">
+
+    <title>JOIN</title>
+</head>
+<body>
+
+
+<div class="d-lg-flex half" >
+    <div class="bg order-1 order-md-2" th:style="'background-image: url(' + @{/img/bg_1.jpg} + ');'"></div>
+    <div class="contents order-2 order-md-1">
+
+        <div class="container">
+            <div class="row align-items-center justify-content-center">
+                <div class="col-md-7">
+                    <h3>Join to <strong>TECHOMOG</strong></h3>
+                    <th:block th:if="${param.logout != null}">
+                        <h1>Logout.............</h1>
+                    </th:block>
+                    <form id="registerForm" action="/member/join" method="post">
+                        <div class="form-group first">
+                            <label for="username">ID</label>
+                            <input id="username" type="text" class="form-control" placeholder="아이디" name="mid">
+                        </div>
+                        <div class="form-group last mb-3">
+                            <label for="password">PW</label>
+                            <input id="password" type="password" class="form-control" placeholder="패스워드" name="mpw">
+                        </div>
+                        <div class="form-group last mb-3">
+                            <label for="password">EMAIL</label>
+                            <input id="email" type="email" class="form-control" placeholder="이메일" name="email">
+                        </div>
+
+                        <div class="d-flex mb-5 align-items-center">
+                            <span class="ml-auto"><a th:href="@{/member/login}" class="forgot-pass">이미 회원이신가요?</a></span>
+                        </div>
+
+                        <button type="submit" class="btn btn-block btn-primary">회원가입</button>
+
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+
+    const error = [[${error}]]
+
+    if(error && error === 'mid'){
+        alert("동일안 MID를 가진 계정이 존재합니다.")
+    }
+
+</script>
+</body>
+</html>
