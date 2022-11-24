@@ -5,13 +5,13 @@
 
 <div layout:fragment="content">
 
-  <div class="s003">
+  <div class="main-slider">
     <form action="/board/list" method="get">
-      <div class="inner-form" style="display: flex; width: 100%; justify-content: center; margin: 30px">
+      <div class="inner-form">
         <input type="hidden" name="size" th:value="${pageRequestDTO.size}">
-        <div class="input-field first-wrap" style="border-right: 1px solid rgba(0, 0, 0, 0.1)">
+        <div class="input-field first-wrap">
           <div class="input-select" >
-            <select name="type" style="width: 14vw; height: 5vh">
+            <select name="type">
               <option placeholder="" value="">카테고리</option>
               <option value="t" th:selected="${pageRequestDTO.type == 't'}">제목</option>
               <option value="c" th:selected="${pageRequestDTO.type == 'c'}">내용</option>
@@ -25,7 +25,7 @@
           <input id="search" type="text" name="keyword" th:value="${pageRequestDTO.keyword}" placeholder="Enter Keywords?" style="width: 40vw; height: 5vh"/>
         </div>
         <div class="input-field third-wrap">
-          <button class="btn-search" type="button" style="width: 7vw; height: 5vh">
+          <button class="btn-search" type="button">
             <i class="fa-solid fa-magnifying-glass"></i>
           </button>
         </div>
@@ -33,51 +33,55 @@
     </form>
   </div>
 
-  <div class="container px-4 px-lg-5">
-    <div class="row gx-4 gx-lg-5 justify-content-center" th:with="link = ${pageRequestDTO.getLink()}">
-      <div class="col-md-10 col-lg-8 col-xl-7" th:each="dto:${responseDTO.dtoList}">
-        <!-- Post preview-->
-        <div class="post-preview" th:style="'display : flex;'">
-            <div th:if="${dto.boardImages != null && dto.boardImages.size() > 0}">
-              <img style="width:100px" th:each="boardImage : ${dto.boardImages}"
-                   th:src="|/view/s_${boardImage.uuid}_${boardImage.fileName}|">
-            </div>
-            <div th:style="'flex-direction : column;'">
-              <h2 class="post-title" th:style = "'width : 100%'">
-                <a style="text-decoration: none" th:href="|@{/board/read(bno=${dto.bno})}&${link}|" >
-                  [[${dto.title}]]
-                </a>
-              </h2>
-              <p class="post-meta" th:style = "'margin : 10px;'">
-                [[${dto.writer}]]
-                [[${#temporals.format(dto.regDate, 'yyyy-MM-dd')}]]
-                <i class="fa-solid fa-comment-dots">[[${dto.replyCount}]]</i>
-              </p>
-            </div>
+  <section class="section blog-area">
+    <div class="container">
+      <div class="row" th:with="link = ${pageRequestDTO.getLink()}">
+        <div class="col-lg-8 col-md-12" th:each="dto:${responseDTO.dtoList}">
+          <!-- Post preview-->
+          <div class="single-post">
+              <div class="image-wrapper" th:if="${dto.boardImages != null && dto.boardImages.size() > 0}">
+                <img th:each="boardImage : ${dto.boardImages}"
+                     th:src="|/view/s_${boardImage.uuid}_${boardImage.fileName}|">
+              </div>
+
+              <div class="icons">
+                <div class="left-area">
+                  <a class="btn caegory-btn" href="#"><b>TRAVEL</b></a>
+                </div>
+                <ul class="right-area social-icons">
+                  <li><a href="#"><i class="ion-android-share-alt"></i>Share</a></li>
+                  <li><a href="#"><i class="ion-android-favorite-outline"></i>03</a></li>
+                  <li><a href="#"><i class="ion-android-textsms"></i>[[${dto.replyCount}]]</a></li>
+                </ul>
+              </div>
+              <p class="date"><em>[[${#temporals.format(dto.regDate, 'yyyy-MM-dd')}]]</em></p>
+              <h3 class="title"><a href="#"><b class="light-color">[[${dto.title}]]</b></a></h3>
+              <a class="btn read-more-btn" th:href="|@{/board/read(bno=${dto.bno})}&${link}|"><b>READ MORE</b></a>
+          </div><!-- single-post -->
+
         </div>
-        <!-- Divider-->
-        <hr class="my-4" />
-      </div>
-      <!-- Pager-->
-      <div class="float-end" style="text-align: center">
-        <ul class="pagination flex-wrap" style="justify-content: center">
-          <li class="page-item" th:if="${responseDTO.prev}">
-            <a class="page-link" th:data-num="${responseDTO.start - 1}">Previous</a>
-          </li>
-          <th:block th:each="i : ${#numbers.sequence(responseDTO.start, responseDTO.end)}">
-            <li th:class="${responseDTO.page == i}?'page-item active':'page-item'">
-              <a class="page-link" th:data-num="${i}">[[${i}]]</a>
+        <!-- Pager-->
+        <div class="float-end" style="text-align: center">
+          <ul class="pagination flex-wrap" style="justify-content: center">
+            <li class="page-item" th:if="${responseDTO.prev}">
+              <a class="page-link" th:data-num="${responseDTO.start - 1}">Previous</a>
             </li>
-          </th:block>
-          <li class="page-item" th:if="${responseDTO.next}">
-            <a class="page-link" th:data-num="${responseDTO.end + 1}">Next</a>
-          </li>
-        </ul>
+            <th:block th:each="i : ${#numbers.sequence(responseDTO.start, responseDTO.end)}">
+              <li th:class="${responseDTO.page == i}?'page-item active':'page-item'">
+                <a class="page-link" th:data-num="${i}">[[${i}]]</a>
+              </li>
+            </th:block>
+            <li class="page-item" th:if="${responseDTO.next}">
+              <a class="page-link" th:data-num="${responseDTO.end + 1}">Next</a>
+            </li>
+          </ul>
+        </div>
+        <div class="d-flex justify-content-end mb-4"><a class="btn btn-primary text-uppercase" href="#!">Older Posts →</a></div>
       </div>
-      <div class="d-flex justify-content-end mb-4"><a class="btn btn-primary text-uppercase" href="#!">Older Posts →</a></div>
     </div>
-  </div>
+  </section>
 </div>
+
 
 <script layout:fragment="script" th:inline="javascript">
 
