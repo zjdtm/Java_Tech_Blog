@@ -144,7 +144,7 @@ b.light-color{ color: #444; }
 3. MENU
 --------------------------------- */
 
-header{ position: absolute; left: 0; right: 0; top: 0; z-index: 1000; font-size: .95em; 
+header{ left: 0; right: 0; top: 0; z-index: 1000; font-size: .95em;
 	box-shadow: 0px 2px 10px rgba(0,0,0, .3); background: #fff; }
 
 
@@ -252,7 +252,7 @@ header .main-menu li.drop-down a.mouseover + ul.drop-down-menu{ display: block;
 4. SLIDER
 --------------------------------- */
 
-.main-slider{ margin-top: 265px; position: relative; width: 100%; overflow: hidden; }
+.main-slider{ margin-top: 100px; position: relative; width: 100%; overflow: hidden; }
  
 .main-slider .slider-content{ padding: 25px 60px 25px 40px!important; border-radius: 3px!important;
 	background: rgba(0,0,0,.6); color: #fff; }
@@ -267,28 +267,36 @@ header .main-menu li.drop-down a.mouseover + ul.drop-down-menu{ display: block;
 .main-slider .ls-nav-prev,
 .main-slider .ls-nav-next{ display: block!important; opacity: 1!important; }
 
+.inner-form { width : 100%; display: flex; justify-content:center; align-items: center}
+
+select { width : 200px; height: 70px; display: flex; border : 2px solid #aaaaaa; border-radius: 20px;
+	font-size: larger;
+}
+
+option { border-bottom: 1px dashed rgb(170, 72, 72); padding: 5px 15px 5px; transition: .1s;}
+
+input { width: 40vw; height: 5vh; border: 0; width : 100%; background: #bbbbbb; border-radius: 20px;
+	padding: 10px 32px 10px 70px; color : cornsilk; font-size: large;
+}
+
 
 /* ---------------------------------
 5. SINGLE POST
 --------------------------------- */
 
-.blog-posts .single-post{ margin-bottom: 60px; }
+.single-post{ display: flex; flex-direction: column; margin-bottom: 50px;}
 
-.single-post .icons{ overflow: hidden; line-height: 30px; margin: 30px 0 10px; }
+.single-post-main { display : flex; justify-content:center; width : 100%; }
 
-.single-post .icons .caegory-btn{ padding: 0 20px; height: 30px; line-height: 30px; }
+.single-post-bottom { display : flex; justify-content: space-evenly; width : 100%; }
 
-.single-post .icons ul.social-icons{ color: #666; }
+.single-post .image-wrapper { width : 20%; height: 20%;}
 
-.single-post .icons ul.social-icons > li > a{ padding-left: 15px; }
-
-.single-post .icons ul.social-icons > li > a > i{ margin-right: 10px; }
-
-.single-post .title{ margin: 20px 0 15px; }
+.single-post .title{ width : 30%; }
 
 .single-post .date{ color: #999; }
 
-.single-post .read-more-btn{ clear: both; margin-top: 30px; box-shadow: 1px 10px 15px rgba(0,0,0, .15); 
+.single-post .read-more-btn{ clear: both; box-shadow: 1px 10px 15px rgba(0,0,0, .15);
 	border: 1px solid #FFAD4D; background: #fff; color: #FFAD4D; }
 
 .single-post .read-more-btn:hover{ box-shadow: 1px 3px 15px rgba(0,0,0, .15); background: #FFAD4D; color: #fff; }

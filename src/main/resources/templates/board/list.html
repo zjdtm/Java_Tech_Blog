@@ -5,24 +5,24 @@
 
 <div layout:fragment="content">
 
-  <div class="main-slider">
+  <div id="slider">
     <form action="/board/list" method="get">
       <div class="inner-form">
         <input type="hidden" name="size" th:value="${pageRequestDTO.size}">
         <div class="input-field first-wrap">
           <div class="input-select" >
             <select name="type">
-              <option placeholder="" value="">카테고리</option>
-              <option value="t" th:selected="${pageRequestDTO.type == 't'}">제목</option>
-              <option value="c" th:selected="${pageRequestDTO.type == 'c'}">내용</option>
-              <option value="w" th:selected="${pageRequestDTO.type == 'w'}">작성자</option>
-              <option value="tc" th:selected="${pageRequestDTO.type == 'tc'}">제목+내용</option>
-              <option value="tcw" th:selected="${pageRequestDTO.type == 'tcw'}">제목+내용+작성자</option>
+              <option placeholder="" value="">📚카테고리</option>
+              <option value="t" th:selected="${pageRequestDTO.type == 't'}">📔제목</option>
+              <option value="c" th:selected="${pageRequestDTO.type == 'c'}">📕내용</option>
+              <option value="w" th:selected="${pageRequestDTO.type == 'w'}">📗작성자</option>
+              <option value="tc" th:selected="${pageRequestDTO.type == 'tc'}">📘제목+내용</option>
+              <option value="tcw" th:selected="${pageRequestDTO.type == 'tcw'}">📙제목+내용+작성자</option>
             </select>
           </div>
         </div>
         <div class="input-field second-wrap">
-          <input id="search" type="text" name="keyword" th:value="${pageRequestDTO.keyword}" placeholder="Enter Keywords?" style="width: 40vw; height: 5vh"/>
+          <input id="search" type="text" name="keyword" th:value="${pageRequestDTO.keyword}" placeholder="찾고 싶은 주제를 입력해보세요"/>
         </div>
         <div class="input-field third-wrap">
           <button class="btn-search" type="button">
@@ -39,24 +39,28 @@
         <div class="col-lg-8 col-md-12" th:each="dto:${responseDTO.dtoList}">
           <!-- Post preview-->
           <div class="single-post">
-              <div class="image-wrapper" th:if="${dto.boardImages != null && dto.boardImages.size() > 0}">
-                <img th:each="boardImage : ${dto.boardImages}"
-                     th:src="|/view/s_${boardImage.uuid}_${boardImage.fileName}|">
+<!--              <div class="image-wrapper" th:if="${dto.boardImages != null && dto.boardImages.size() > 0}">-->
+<!--                <img style="width: 500px; height: 400px;" th:each="boardImage : ${dto.boardImages}"-->
+<!--                     th:src="|/view/s_${boardImage.uuid}_${boardImage.fileName}|">-->
+<!--              </div>-->
+              <div class="single-post-main">
+                  <div class="image-wrapper">
+                    <img th:src="@{/img/home-bg.jpg}">
+                  </div>
+                  <h3 class="title"><b class="light-color">[[${dto.title}]]</b></h3>
+                  <div class="icons">
+                    <ul class="right-area social-icons">
+                      <li><i class="ion-android-textsms"></i>[[${dto.replyCount}]]</li>
+                    </ul>
+                  </div>
               </div>
-
-              <div class="icons">
-                <div class="left-area">
-                  <a class="btn caegory-btn" href="#"><b>TRAVEL</b></a>
-                </div>
-                <ul class="right-area social-icons">
-                  <li><a href="#"><i class="ion-android-share-alt"></i>Share</a></li>
-                  <li><a href="#"><i class="ion-android-favorite-outline"></i>03</a></li>
-                  <li><a href="#"><i class="ion-android-textsms"></i>[[${dto.replyCount}]]</a></li>
-                </ul>
+              <div class="single-post-bottom">
+                  <a class="btn read-more-btn" th:href="|@{/board/read(bno=${dto.bno})}&${link}|"><b>더 읽어보기</b></a>
+                  <p class="date"><em>[[${#temporals.format(dto.regDate, 'yyyy-MM-dd')}]]</em></p>
+<!--                  <div class="left-area">-->
+<!--                      <a class="btn caegory-btn" href="#"><b>태그들</b></a>-->
+<!--                  </div>-->
               </div>
-              <p class="date"><em>[[${#temporals.format(dto.regDate, 'yyyy-MM-dd')}]]</em></p>
-              <h3 class="title"><a href="#"><b class="light-color">[[${dto.title}]]</b></a></h3>
-              <a class="btn read-more-btn" th:href="|@{/board/read(bno=${dto.bno})}&${link}|"><b>READ MORE</b></a>
           </div><!-- single-post -->
 
         </div>
