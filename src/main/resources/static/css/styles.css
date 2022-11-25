@@ -179,15 +179,15 @@ input { width : 25em; height: 3em; border: 0; background: #bbbbbb; border-radius
 5. SINGLE POST
 --------------------------------- */
 
-.single-post{ display: flex; flex-direction: column; margin-bottom: 50px;}
+.single-post{ display: flex; flex-direction: column; justify-content : center;  width:100%; margin-bottom: 50px;}
 
 .single-post-main { display : flex; justify-content:center; width : 100%; }
 
-.single-post-bottom { display : flex; justify-content: space-evenly; width : 100%; }
+.single-post-bottom { display : flex; justify-content: space-between; width : 100%; }
 
-.single-post .image-wrapper { width : 20%; height: 20%;}
+.single-post .image-wrapper { width : 100%; height: 20%;}
 
-.single-post .board-info { width : 40%; height : 20%; }
+.single-post .board-info { width : 200%; }
 
 .single-post .title{ width : 100%; }
 

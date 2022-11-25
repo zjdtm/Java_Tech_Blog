@@ -33,8 +33,8 @@
 
   <section class="section blog-area">
     <div class="container">
-      <div class="row" th:with="link = ${pageRequestDTO.getLink()}">
-        <div class="col-lg-8 col-md-12" th:each="dto:${responseDTO.dtoList}">
+      <div th:with="link = ${pageRequestDTO.getLink()}">
+        <div th:each="dto:${responseDTO.dtoList}">
           <!-- Post preview-->
           <div class="single-post">
 <!--              <div class="image-wrapper" th:if="${dto.boardImages != null && dto.boardImages.size() > 0}">-->
@@ -71,7 +71,7 @@
 
         </div>
         <!-- Pager-->
-        <div class="float-end" style="text-align: center">
+        <div style="text-align: center">
           <ul class="pagination flex-wrap" style="justify-content: center">
             <li class="page-item" th:if="${responseDTO.prev}">
               <a class="page-link" th:data-num="${responseDTO.start - 1}">Previous</a>
