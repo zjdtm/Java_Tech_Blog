@@ -24,11 +24,9 @@
         <div class="input-field second-wrap">
           <input id="search" type="text" name="keyword" th:value="${pageRequestDTO.keyword}" placeholder="찾고 싶은 주제를 입력해보세요"/>
         </div>
-        <div class="input-field third-wrap">
           <button class="btn-search" type="button">
-            <i class="fa-solid fa-magnifying-glass"></i>
+              <i class="fa-solid fa-magnifying-glass"></i>
           </button>
-        </div>
       </div>
     </form>
   </div>
@@ -47,7 +45,15 @@
                   <div class="image-wrapper">
                     <img th:src="@{/img/home-bg.jpg}">
                   </div>
-                  <h3 class="title"><b class="light-color">[[${dto.title}]]</b></h3>
+                  <div class="board-info">
+                      <h2 class="title"><b class="light-color">[[${dto.title}]]</b></h2>
+                      <h5 class="content"><b class="light-color">What is Lorem Ipsum?
+                          Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s,
+                          when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting,
+                          remaining essentially unchanged. It was popularised in the 1960s with the release of
+                          Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
+                         </b></h5>
+                  </div>
                   <div class="icons">
                     <ul class="right-area social-icons">
                       <li><i class="ion-android-textsms"></i>[[${dto.replyCount}]]</li>
@@ -80,7 +86,6 @@
             </li>
           </ul>
         </div>
-        <div class="d-flex justify-content-end mb-4"><a class="btn btn-primary text-uppercase" href="#!">Older Posts →</a></div>
       </div>
     </div>
   </section>

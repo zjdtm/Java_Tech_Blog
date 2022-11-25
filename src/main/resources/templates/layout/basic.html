@@ -6,6 +6,8 @@
   <meta charset="utf-8" />
   <title>TECOMOG</title>
   <link rel="icon" type="image/x-icon" th:href="@{/img/teco.png}" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css" integrity="sha512-MV7K8+y+gLIBoVD59lQIYicR65iaqukzvf/nwasF0nqhPay5w/9lJmVM2hMDcnK1OnMGCdVK+iQrJ7lzPJQd1w==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
   <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500" rel="stylesheet">
   <link href="https://cdn.quilljs.com/1.3.6/quill.snow.css">
   <link th:href="@{/css/styles.css}" rel="stylesheet">
@@ -29,11 +31,9 @@
     </div>
 
     <ul class="main-menu visible-on-click" id="main-menu">
-      <li class="drop-down"><a href="#!">HOME</a></li>
-      <li><a href="#">FEATURED</a></li>
-      <li><a href="#">ABOUT</a></li>
-      <li><a href="#">CATEGORIES</a></li>
-      <li><a href="#">CONTACT</a></li>
+      <li><a th:href="@{/board/list}">메인 페이지</a></li>
+      <li><a th:href="@{/board/register}">글 작성</a></li>
+      <li><a href="#">내 정보</a></li>
     </ul>
 
   </div>
@@ -50,28 +50,20 @@
 
       <div class="col-sm-6">
         <div class="footer-section">
-          <p class="copyright">Juli &copy; 2018. All rights reserved | Made with <i class="ion-heart" aria-hidden="true"></i> by <a href="https://colorlib.com" target="_blank">Colorlib</a> &amp; distributed by <a href="https://themewagon.com" target="_blank">ThemeWagon</a></p>
+          <p class="copyright"><i class="ion-heart" aria-hidden="true">
+          </i> by <a href="https://github.com/zjdtm" target="_blank">MyGitHub</a>
+            &amp; distributed by <a href="https://themewagon.com" target="_blank">ThemeWagon</a>
+          </p>
+          <img th:src="@{/img/teco.png}">
         </div><!-- footer-section -->
       </div><!-- col-lg-4 col-md-6 -->
-
-      <div class="col-sm-6">
-        <div class="footer-section">
-          <ul class="social-icons">
-            <li><a href="#"><i class="ion-social-facebook-outline"></i></a></li>
-            <li><a href="#"><i class="ion-social-twitter-outline"></i></a></li>
-            <li><a href="#"><i class="ion-social-instagram-outline"></i></a></li>
-            <li><a href="#"><i class="ion-social-vimeo-outline"></i></a></li>
-            <li><a href="#"><i class="ion-social-pinterest-outline"></i></a></li>
-          </ul>
-        </div><!-- footer-section -->
-      </div><!-- col-lg-4 col-md-6 -->
-
     </div><!-- row -->
   </div><!-- container -->
 </footer>
   <!-- Bootstrap core JS-->
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.min.js" integrity="sha384-IDwe1+LCz02ROU9k972gdyvl+AESN10+x7tBKgc9I5HFtuNz0wWnPclzo6p9vxnk" crossorigin="anonymous"></script>
   <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 
   <!-- Include the Quill library -->
