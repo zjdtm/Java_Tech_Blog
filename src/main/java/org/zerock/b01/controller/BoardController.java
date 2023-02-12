@@ -41,8 +41,6 @@ public class BoardController {
 
         PageResponseDTO<BoardListAllDTO> responseDTO = boardService.listWithAll(pageRequestDTO);
 
-        log.info(responseDTO);
-
         model.addAttribute("responseDTO", responseDTO);
 
     }
