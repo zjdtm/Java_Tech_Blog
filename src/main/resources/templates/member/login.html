@@ -3,43 +3,40 @@
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{layout/basic.html}">
 
-<div layout:fragment="content">
+<th:block th:fragment="setLogin(login)">
 
-    <div class="container login">
-        <div class="row">
-            <div class="col-sm-9 col-md-7 col-lg-5 mx-auto">
-                <div class="card border-0 shadow rounded-3 my-5">
-                    <div class="card-body p-4 p-sm-5">
-                        <h2 class="card-title text-center mb-5 fw-light">LOG IN</h2>
-                        <form>
-                            <div class="form-floating mb-3">
-                                <input type="email" class="form-control" id="floatingInput" placeholder="name@example.com">
-                                <label for="floatingInput">이메일</label>
-                            </div>
-                            <div class="form-floating mb-3">
-                                <input type="password" class="form-control" id="floatingPassword" placeholder="Password">
-                                <label for="floatingPassword">패스워드</label>
-                            </div>
-
-                            <div class="form-check mb-3">
-                                <input class="form-check-input" type="checkbox" value="" id="rememberPasswordCheck">
-                                <label class="form-check-label" for="rememberPasswordCheck">
-                                    Remember password
-                                </label>
-                            </div>
-                            <div class="d-grid">
-                                <button class="btn btn-primary btn-login text-uppercase fw-bold" type="submit">Log in</button>
-                            </div>
-                            <hr class="my-4">
-                            <div class="d-grid mb-2">
-                                <button class="btn btn-kakao btn-login text-uppercase fw-bold" type="submit">
-                                    <i class="fab fa-kakao me-2"></i> Sign in with Kakao
-                                </button>
-                            </div>
-                        </form>
-                    </div>
-                </div>
+    <body>
+    <div class="member_login">
+        <form th:action="@{/auth/loginProc}" th:method="POST">
+            <div class="member_login_input">
+                <input type="text" name="username" placeholder="아이디" >
             </div>
-        </div>
+
+            <div class="member_login_input">
+                <input type="password" name="password" placeholder="비밀번호">
+            </div>
+
+            <div class="member_login_btn">
+
+                <input type="submit" class="btn btn-secondary" id="btn-login" value="로그인">
+
+                <input type="button" class="btn btn-secondary" value="회원가입" onclick="location.href='/member/join'">
+
+            </div>
+
+            <div class="find_password">
+                <a href="/forgot-password">아이디 또는 비밀번호를 잊으셨나요?</a>
+            </div>
+
+            <div class="login_api">
+                <a href="https://kauth.kakao.com/oauth/authorize?client_id=d860d38c992ca8bf5f07dcc3fd5122b9&redirect_uri=http://localhost:9090/member/auth/kakao/callback&response_type=code"><img src="/image/kakao_login_button.png"></a>
+            </div>
+
+            <div class="login_api">
+                <a href="/oauth2/authorization/google"><img src="/image/google_login_button.png"></a>
+            </div>
+
+        </form>
     </div>
-</div>
+    </body>
+</th:block>

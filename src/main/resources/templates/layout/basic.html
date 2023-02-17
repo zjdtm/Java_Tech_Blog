@@ -24,16 +24,31 @@
         </a>
 
         <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
-          <li><a href="#" class="nav-link px-2 text-secondary">Home</a></li>
-          <li><a href="#" class="nav-link px-2 text-white">Features</a></li>
-          <li><a href="#" class="nav-link px-2 text-white">Pricing</a></li>
-          <li><a href="#" class="nav-link px-2 text-white">FAQs</a></li>
-          <li><a href="#" class="nav-link px-2 text-white">About</a></li>
+          <li><a th:href="@{list}" class="nav-link px-2 text-secondary">TECOMOG</a></li>
         </ul>
 
         <div class="text-end">
-          <button type="button" class="btn btn-outline-light me-2">Login</button>
-          <button type="button" class="btn btn-warning">Sign-up</button>
+          <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal" data-bs-whatever="@mdo">Open modal for @mdo</button>
+
+          <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" style="display: none;">
+            <div class="modal-dialog">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h1 class="modal-title fs-5" id="exampleModalLabel">New message to @mdo</h1>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                  <th:block th:replace="~{/member/login :: setLogin(~{this::login})}">
+
+                  </th:block>
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                  <button type="button" class="btn btn-primary">Send message</button>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -46,20 +61,20 @@
 
   <!-- Footer-->
   <footer>
-  <div class="container">
-    <div class="pagination-row">
-      <div class="col-sm-6">
-        <div class="footer-section">
-          <p class="copyright"><i class="ion-heart" aria-hidden="true">
-          </i> by <a href="https://github.com/zjdtm" target="_blank">MyGitHub</a>
-            &amp; distributed by <a href="https://themewagon.com" target="_blank">ThemeWagon</a>
-          </p>
-          <img th:src="@{/img/teco.png}">
-        </div><!-- footer-section -->
-      </div><!-- col-lg-4 col-md-6 -->
-    </div><!-- row -->
-  </div><!-- container -->
-</footer>
+    <div class="container">
+      <div class="pagination-row">
+        <div class="col-sm-6">
+          <div class="footer-section">
+            <p class="copyright"><i class="ion-heart" aria-hidden="true">
+            </i> by <a href="https://github.com/zjdtm" target="_blank">MyGitHub</a>
+              &amp; distributed by <a href="https://themewagon.com" target="_blank">ThemeWagon</a>
+            </p>
+            <img th:src="@{/img/teco.png}">
+          </div><!-- footer-section -->
+        </div><!-- col-lg-4 col-md-6 -->
+      </div><!-- row -->
+    </div><!-- container -->
+  </footer>
 
   <!-- Bootstrap core JS-->
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
