@@ -5,9 +5,6 @@ import lombok.*;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "Reply", indexes = {
-        @Index(name = "idx_reply_board_bno", columnList = "board_bno")
-})
 @Getter
 @Builder
 @AllArgsConstructor
@@ -17,17 +14,28 @@ public class Reply extends BaseEntity{
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "reply_id")
     private Long rno;
 
     @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "board_id")
     private Board board;
 
-    private String replyText;
+    private String replyContent;
 
-    private String replyer;
+    private int like;
 
-    public void changeText(String text){
-        this.replyText = text;
+    public void change(String content){
+        this.replyContent = replyContent;
     }
+
+    public void like_press(){
+        like += 1;
+    }
+
+    public void like_not(){
+        like -= 1;
+    }
+
 
 }
