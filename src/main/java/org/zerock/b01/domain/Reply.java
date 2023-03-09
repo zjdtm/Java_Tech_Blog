@@ -4,28 +4,35 @@ import lombok.*;
 
 import javax.persistence.*;
 
+import static javax.persistence.FetchType.*;
+
 @Entity
 @Getter
-@Builder
-@AllArgsConstructor
-@NoArgsConstructor
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 @ToString(exclude = "board")
 public class Reply extends BaseEntity{
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue
     @Column(name = "reply_id")
-    private Long rno;
+    private Long id;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = LAZY)
     @JoinColumn(name = "board_id")
     private Board board;
 
     private String replyContent;
 
+    @Column(name = "reply_like")
     private int like;
 
-    public void change(String content){
+    public Reply(Board board, String replyContent) {
+        this.board = board;
+        this.replyContent = replyContent;
+        this.like = 0;
+    }
+
+    public void change(String replyContent){
         this.replyContent = replyContent;
     }
 
