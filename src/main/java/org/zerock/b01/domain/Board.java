@@ -1,10 +1,9 @@
 package org.zerock.b01.domain;
 
+import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
-
-import javax.persistence.*;
 
 import static lombok.AccessLevel.PROTECTED;
 

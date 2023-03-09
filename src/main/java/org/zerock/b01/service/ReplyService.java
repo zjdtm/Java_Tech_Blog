@@ -4,7 +4,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.zerock.b01.domain.Reply;
-import org.zerock.b01.dto.ReplyDTO;
 import org.zerock.b01.repository.ReplyRepository;
 
 import java.util.List;
