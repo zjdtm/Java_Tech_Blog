@@ -95,6 +95,8 @@
  
  해결 방안으로는 cascade (영속성 전이)를 사용해서 Board 엔티티를 영속화 시키기 전 Member 엔티티를 먼저 영속화 시켜준다.
  ![image](https://user-images.githubusercontent.com/35757620/224001452-ac830df2-6a7d-42d6-a75b-91b33bc84813.png)
+ ![image](https://user-images.githubusercontent.com/35757620/224001747-1b199481-a6d1-4ee9-a677-0b44704acf1a.png)
+
 
  ## **Quill editor** 에러들
  + ### html 태그들의 그대로 적용되던 문제점
