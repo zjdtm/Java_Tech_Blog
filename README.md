@@ -85,6 +85,17 @@
 </div>
 
 # :bomb: ERRORS
+ ## ** Test 에러 **
+ 게시물을 등록한 후 전체 게시물을 화면에 출력할 때 맞는 데이터가 들어오는지 확인하기 위해서 테스트 코드를 작성해 보다가 에러가 발생하였다.
+ ![image](https://user-images.githubusercontent.com/35757620/223999961-1f3f8d61-6216-4b8e-8976-ca63471bd1f7.png)
+ ![image](https://user-images.githubusercontent.com/35757620/224000295-8d1da255-a1c9-46ea-b3e1-ac1cf3664978.png)
+ InvalidDataAccessApiUsageException 예외가 발생하였는데 검색 한 결과를 토대로 예외를 해석하자면
+ 
+ Board 테이블을 등록하기 위해서 Member 테이블도 같이 등록해야 하는데 Member id 값을 알 수 가 없기 때문에 예외가 발생한거 같다.
+ 
+ 해결 방안으로는 cascade (영속성 전이)를 사용해서 Board 엔티티를 영속화 시키기 전 Member 엔티티를 먼저 영속화 시켜준다.
+ ![image](https://user-images.githubusercontent.com/35757620/224001452-ac830df2-6a7d-42d6-a75b-91b33bc84813.png)
+
  ## **Quill editor** 에러들
  + ### html 태그들의 그대로 적용되던 문제점
 <img src="https://user-images.githubusercontent.com/35757620/201845835-f4a91fa8-ad94-434e-a2a6-f28c37c6e2be.jpg" width="100%" height="50%"/>
