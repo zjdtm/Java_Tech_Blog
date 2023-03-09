@@ -1,19 +1,32 @@
 package org.zerock.b01.service;
 
-import org.zerock.b01.dto.PageRequestDTO;
-import org.zerock.b01.dto.PageResponseDTO;
+import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+import org.zerock.b01.domain.Reply;
 import org.zerock.b01.dto.ReplyDTO;
+import org.zerock.b01.repository.ReplyRepository;
 
-public interface ReplyService {
+import java.util.List;
 
-    Long register(ReplyDTO replyDTO);
+@Service
+@Transactional(readOnly = true)
+@RequiredArgsConstructor
+public class ReplyService {
 
-    ReplyDTO read(Long rno);
+    private final ReplyRepository replyRepository;
 
-    void modify(ReplyDTO replyDTO);
+    @Transactional
+    public Long register(Reply reply){
+        replyRepository.save(reply);
+        return reply.getId();
+    }
 
-    void remove(Long rno);
+    public List<Reply> findReplies(Long board_id){
+        return replyRepository.findReplyByBoardId(board_id);
+    }
 
-    PageResponseDTO<ReplyDTO> getListOfBoard(Long bno, PageRequestDTO pageRequestDTO);
+
+
 
 }

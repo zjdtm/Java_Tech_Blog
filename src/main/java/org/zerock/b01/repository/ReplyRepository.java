@@ -7,10 +7,11 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.zerock.b01.domain.Reply;
 
+import java.util.List;
+
 public interface ReplyRepository extends JpaRepository<Reply, Long> {
 
-    @Query("select r from Reply r where r.board.bno = :bno")
-    Page<Reply> listOfBoard(@Param("bno") Long bno, Pageable pageable);
+    @Query("select r from Reply r where r.board.id = :boardId")
+    List<Reply> findReplyByBoardId(@Param("boardId") Long boardId);
 
-    void deleteByBoard_Bno(Long bno);
 }
