@@ -10,28 +10,32 @@ import static javax.persistence.GenerationType.*;
 
 @Entity
 @Getter
-@Builder
-@AllArgsConstructor
-@NoArgsConstructor
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Member extends BaseEntity{
 
     @Id
-    @GeneratedValue(strategy = IDENTITY)
-    @Column(name = "user_id")
+    @GeneratedValue
+    @Column(name = "member_id")
     private Long id;
 
-    private String user_id;
-
-    private String password;
+    private String nickname;
     private String email;
 
-    public void changePassword(String password){
+    private String password;
+
+    public Member(String nickname, String email, String password) {
+        this.nickname = nickname;
+        this.email = email;
         this.password = password;
     }
 
-    public void changeEmail(String email){
+    public void change(String nickname, String email, String password){
+        this.nickname = nickname;
         this.email = email;
+        this.password = password;
     }
+
+
 
 
 }

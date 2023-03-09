@@ -1,27 +1,23 @@
 package org.zerock.b01.domain;
 
-import lombok.*;
-import org.hibernate.annotations.BatchSize;
-import org.springframework.context.annotation.Lazy;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 import javax.persistence.*;
-import java.util.HashSet;
-import java.util.Set;
 
-import static javax.persistence.GenerationType.*;
+import static lombok.AccessLevel.PROTECTED;
 
 @Entity
 @Getter
-@Builder
-@AllArgsConstructor
-@NoArgsConstructor
+@NoArgsConstructor(access = PROTECTED)
 @ToString(exclude = "member")
 public class Board extends BaseEntity{
 
     @Id
-    @GeneratedValue(strategy = IDENTITY)
+    @GeneratedValue
     @Column(name = "board_id ")
-    private Long bno;
+    private Long id;
 
     @Column(length = 500, nullable = false)
     private String title;
@@ -34,20 +30,26 @@ public class Board extends BaseEntity{
 
     private int views;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_id")
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JoinColumn(name = "member_id")
     private Member member;
+
+    public Board(String title, String content, Member member) {
+        this.title = title;
+        this.content = content;
+        this.member = member;
+    }
 
     public void change(String title, String content){
         this.title = title;
         this.content = content;
     }
 
-    public void like_press(){
+    public void boardLike(){
         like = like + 1;
     }
 
-    public void like_not(){
+    public void boardNotLike(){
         like = like - 1;
     }
 
