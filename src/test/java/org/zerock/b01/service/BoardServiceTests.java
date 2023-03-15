@@ -1,99 +1,137 @@
 package org.zerock.b01.service;
 
-import lombok.extern.log4j.Log4j2;
+import lombok.extern.slf4j.Slf4j;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.data.domain.Page;
 import org.springframework.transaction.annotation.Transactional;
 import org.zerock.b01.domain.Board;
-import org.zerock.b01.domain.Member;
+import org.zerock.b01.dto.BoardDTO;
+import org.zerock.b01.dto.PageRequestDTO;
 
 import java.util.List;
+import java.util.stream.IntStream;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
 @SpringBootTest
 @Transactional
-@Log4j2
+@Slf4j
 public class BoardServiceTests {
 
     @Autowired
     BoardService boardService;
 
+
     @Test
-    public void board_register() {
-        //given
-        Member member = new Member("lofi", "lofi@naver.com", "11111");
+    @BeforeEach
+    public void testRegister(){
+        IntStream.rangeClosed(1, 100).forEach(i -> {
+            BoardDTO boardDTO = BoardDTO.builder()
+                    .title("Sample Title..." + i)
+                    .content("Sample Content..."+ i)
+                    .writer("user" + i)
+                    .build();
 
-        Board board = new Board("패스트 캠퍼스 회고록", "안녕하세요 저는 ....", member);
-
-        //when
-        Long register_id = boardService.register(board);
-
-        //then
-        assertThat(board).isEqualTo(boardService.findOne(register_id));
+            boardService.register(boardDTO);
+        });
     }
 
     @Test
-    public void board_findAll(){
+    public void testFindOne(){
+
+        BoardDTO boardDTO = BoardDTO.builder()
+                .title("안녕하세요!!")
+                .content("반갑습니다 처음 개발하게 되어서 ....")
+                .writer("나신입")
+                .build();
+
+        Long bno = boardService.register(boardDTO);
+
+        BoardDTO findBoard = boardService.findOne(bno);
+
+        assertThat(findBoard.getTitle()).isEqualTo(boardDTO.getTitle());
+
+    }
+
+    @Test
+    public void testFindAll(){
 
         // given
-        Member member = new Member("lofi", "lofi@naver.com", "11111");
-
-        Board board1 = new Board("요즘 경제가 어려워요", "요즘 참 살기 힘들시죠.......", member);
-        Board board2 = new Board("코딩이 너무 어려워요 어떡하죠?", "AI의 발전으로 코딩의 대한 미래는 .....", member);
-
         // when
-        boardService.register(board1);
-        boardService.register(board2);
 
         List<Board> boards = boardService.findBoards();
 
         // then
-        assertThat(boards.get(0).getTitle()).isEqualTo(board1.getTitle());
-        assertThat(boards.get(1).getTitle()).isEqualTo(board2.getTitle());
+        assertThat(boards.size()).isEqualTo(100);
     }
 
     @Test
-    public void board_update() throws Exception {
+    public void testUpdate() {
 
         // given
-        Member member = new Member("lofi", "lofi@naver.com", "11111");
-
-        Board board = new Board("백엔드 개발자가 알아야할 필수 지식", "백엔드 개발자라면 꼭 알아야 할 .....", member);
+        BoardDTO boardDTO = BoardDTO.builder()
+                .title("백앤드 개발자가 알아야할 필수 지식")
+                .content("백엔드 개발자는 이러 이러 이러한 내용을...")
+                .writer("백엔드 지망생")
+                .build();
 
         // when
-        Long registeredId = boardService.register(board);
-        Board findBoard = boardService.findOne(registeredId);
+        Long boardId = boardService.register(boardDTO);
 
-        findBoard.change("프론트엔드 개발자가 알아야할 필수 지식", "프론트 엔드 개발자가 꼭 알아야 할 .....");
+        BoardDTO updateBoardDTO = BoardDTO.builder()
+                .bno(boardId)
+                .title("프론트 엔드 개발자가 알아야할 필수 지식")
+                .content("프론트 개발자는 이러 이러 이러한 내용을...")
+                .writer("프론트 지망생")
+                .build();
+
+        Long updatedBoardId = boardService.updateBoard(updateBoardDTO);
+
+        BoardDTO findBoard = boardService.findOne(updatedBoardId);
 
         // then
-        Board updatedBoard = boardService.findOne(registeredId);
-        assertThat(updatedBoard.getTitle()).isEqualTo("프론트엔드 개발자가 알아야할 필수 지식");
-        assertThat(updatedBoard.getContent()).isEqualTo("프론트 엔드 개발자가 꼭 알아야 할 .....");
-        assertThat(updatedBoard.getMember().getEmail()).isEqualTo("lofi@naver.com");
+        assertThat(findBoard.getTitle()).isEqualTo(updateBoardDTO.getTitle());
+        assertThat(findBoard.getContent()).isEqualTo(updateBoardDTO.getContent());
 
     }
 
     @Test
-    public void board_like() {
+    public void testDelete(){
 
-        // given
-        Member member = new Member("lofi", "lofi@naver.com", "11111");
+        BoardDTO boardDTO = BoardDTO.builder()
+                .title("백앤드 개발자가 알아야할 필수 지식")
+                .content("백엔드 개발자는 이러 이러 이러한 내용을...")
+                .writer("백엔드 지망생")
+                .build();
 
-        Board board = new Board("백엔드 개발자가 알아야할 필수 지식", "백엔드 개발자라면 꼭 알아야 할 .....", member);
+        Long boardId = boardService.register(boardDTO);
 
-        // when
-        Long registeredId = boardService.register(board);
-        Board findBoard = boardService.findOne(registeredId);
+        boardService.deleteBoard(boardId);
 
-        findBoard.boardLike();
-        findBoard.boardLike();
-        findBoard.boardNotLike();
+        List<Board> boards = boardService.findBoards();
 
-        // then
-        assertThat(findBoard.getLike()).isEqualTo(1);
+        assertThat(boards.size()).isEqualTo(100);
+    }
+
+    @Test
+    public void testSearch(){
+
+        PageRequestDTO pageRequestDTO = PageRequestDTO.builder()
+                .page(0)
+                .size(10)
+                .keyword("1")
+                .build();
+
+        Page<Board> boards = boardService.searchBoard(pageRequestDTO);
+
+        assertThat(boards.getSize()).isEqualTo(10);
+        assertThat(boards.getContent()).extracting("title")
+                .containsExactly("Sample Title...1", "Sample Title...10",
+                        "Sample Title...11", "Sample Title...12", "Sample Title...13", "Sample Title...14",
+                        "Sample Title...15", "Sample Title...16", "Sample Title...17", "Sample Title...18");
 
     }
 
