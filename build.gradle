@@ -53,6 +53,8 @@ dependencies {
     // ModelMapper
     implementation 'org.modelmapper:modelmapper:3.1.1'
 
+    // Thymeleaf Layout
+    implementation 'nz.net.ultraq.thymeleaf:thymeleaf-layout-dialect:3.2.0'
 
 
 }
