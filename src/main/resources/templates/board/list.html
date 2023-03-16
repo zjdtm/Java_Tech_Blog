@@ -4,50 +4,40 @@
       layout:decorate="~{layout/basic.html}">
 
 <div layout:fragment="content">
+    <div class="col-md-6 col-lg-4 mb-5" th:each="dto : ${responseDTO.dtoList}">
+        <div class="portfolio-item mx-auto" >
+            <div class="portfolio-item-caption d-flex align-items-center justify-content-center h-100 w-100">
+                <div class="portfolio-item-caption-content text-center text-white"><i class="fas fa-plus fa-3x"></i></div>
+            </div>
+            <img class="img-fluid" src="assets/img/portfolio/cabin.png" alt="..." />
+            <span scope="row">[[${dto.bno}]]</span>
+            <span>[[${dto.title}]]</span>
+            <span>[[${dto.writer}]]</span>
+            <span>[[${#temporals.format(dto.regDate, 'yyyy-MM-dd')}]]</span>
+        </div>
+    </div>
 
-<!--    <div id="slider">-->
-<!--        <form action="/board/list" method="get">-->
-<!--          <div class="inner-form d-flex flex-row justify-content-center">-->
-<!--            <input type="hidden" name="size" th:value="${pageRequestDTO.size}">-->
-<!--            <select name="type">-->
-<!--              <option placeholder="" value="">📚-&#45;&#45;&#45;&#45;</option>-->
-<!--              <option value="t" th:selected="${pageRequestDTO.type == 't'}">📔제목</option>-->
-<!--              <option value="c" th:selected="${pageRequestDTO.type == 'c'}">📕내용</option>-->
-<!--              <option value="w" th:selected="${pageRequestDTO.type == 'w'}">📗작성자</option>-->
-<!--              <option value="tc" th:selected="${pageRequestDTO.type == 'tc'}">📘제목+내용</option>-->
-<!--              <option value="tcw" th:selected="${pageRequestDTO.type == 'tcw'}">📙제목+내용+작성자</option>-->
-<!--            </select>-->
-<!--              <input class="w-90" id="search" type="text" name="keyword" th:value="${pageRequestDTO.keyword}" placeholder="찾고 싶은 주제를 입력해보세요"/>-->
-<!--              <button class="btn-search" type="button">-->
-<!--                  <i class="fa-solid fa-magnifying-glass"></i>-->
-<!--              </button>-->
-<!--          </div>-->
-<!--        </form>-->
-<!--    </div>-->
-<!--    <div class="album py-5 bg-light">-->
-<!--        <div class="container-fluid">-->
-<!--            <div class="row row-cols-5 row-cols-sm-2 row-cols-md-3 g-5">-->
-<!--                <div class="col" th:each="dto:${responseDTO.dtoList}">-->
-<!--                    <div class="card shadow-lg">-->
-<!--                        <svg class="bd-placeholder-img card-img-top" width="80%" height="225" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Thumbnail" preserveAspectRatio="xMidYMid slice" focusable="false">-->
-<!--                            <title>Placeholder</title>-->
-<!--                            <rect width="100%" height="100%" fill="#55595c"/>-->
-<!--                            <text x="50%" y="50%" fill="#eceeef" dy=".3em">Thumbnail</text></svg>-->
-<!--                        <div class="card-body">-->
-<!--                            <p class="card-text" th:text="${dto.title}"></p>-->
-<!--                            <div class="d-flex justify-content-between align-items-center">-->
-<!--                                <div class="btn-group">-->
-<!--                                    <button type="button" class="btn btn-sm btn-outline-secondary">View</button>-->
-<!--                                    <button type="button" class="btn btn-sm btn-outline-secondary">Edit</button>-->
-<!--                                </div>-->
-<!--                                <small class="text-muted" th:text="${dto.regDate}"></small>-->
-<!--                            </div>-->
-<!--                        </div>-->
-<!--                    </div>-->
-<!--                </div>-->
-<!--            </div>-->
-<!--        </div>-->
-<!--    </div>-->
+    <div class="row mb-5">
+        <div class="col-md-12">
+            <div class="block-27">
+                <ul class="pagination justify-content-around">
+                    <li class="page-item" th:if="${responseDTO.prev}">
+                        <a class="page-link" th:data-num="${responseDTO.start - 1}"><</a>
+                    </li>
+
+                    <th:block th:each="i : ${#numbers.sequence(responseDTO.start, responseDTO.end)}">
+                        <li th:class="${responseDTO.page == i}?'page-item active':'page-item'" >
+                            <a class="page-link" th:data-num="${i}">[[${i}]]</a>
+                        </li>
+                    </th:block>
+
+                    <li class="page-item" th:if="${responseDTO.next}">
+                        <a class="page-link" th:data-num="${responseDTO.end - 1}">></a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
 </div>
 
 
