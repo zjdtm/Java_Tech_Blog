@@ -14,14 +14,12 @@ import static lombok.AccessLevel.PROTECTED;
 public class Board extends BaseEntity{
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "board_id ")
-    private Long id;
+    private Long bno;
 
-    @Column(length = 500, nullable = false)
     private String title;
 
-    @Column(length = 2000, nullable = false)
     private String content;
 
     @Column(name = "board_like")
@@ -29,14 +27,13 @@ public class Board extends BaseEntity{
 
     private int views;
 
-    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    @JoinColumn(name = "member_id")
-    private Member member;
+//    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+//    @JoinColumn(name = "member_id")
+//    private Member member;
 
-    public Board(String title, String content, Member member) {
+    public Board(String title, String content) {
         this.title = title;
         this.content = content;
-        this.member = member;
     }
 
     public void change(String title, String content){
@@ -44,12 +41,12 @@ public class Board extends BaseEntity{
         this.content = content;
     }
 
-    public void boardLike(){
-        like = like + 1;
+    public void notLike(){
+        this.like += 1;
     }
 
-    public void boardNotLike(){
-        like = like - 1;
+    public void like(){
+        this.like -= 1;
     }
 
     public void views(){
