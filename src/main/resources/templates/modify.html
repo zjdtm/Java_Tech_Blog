@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/basic.html}">
+
+<div layout:fragment="content">
+  <div class="card-body">
+
+      <form th:action="@{/modify}" method="post">
+
+      <div class="input-group mb-3">
+          <span class="input-group-text">글 번호</span>
+          <input type="text" name="bno" class="form-control" th:value="${dto.bno}" readonly>
+      </div>
+
+      <div class="input-group mb-3">
+          <span class="input-group-text">작성일자</span>
+          <input type="text" name="bno" class="form-control" th:value="${#temporals.format(dto.regDate, 'yyyy-MM-dd HH:mm:ss')}" readonly>
+      </div>
+
+      <div class="input-group mb-3">
+          <span class="input-group-text">수정일자</span>
+          <input type="text" name="bno" class="form-control" th:value="${#temporals.format(dto.modDate, 'yyyy-MM-dd HH:mm:ss')}" readonly>
+      </div>
+
+      <div class="input-group mb-3">
+        <span class="input-group-text">제목</span>
+        <input type="text" name="title" class="form-control" th:value="${dto.title}" >
+      </div>
+
+      <div class="input-group mb-3 style">
+        <span class="input-group-text">작성자</span>
+        <input type="text" name="writer" class="form-control" th:value="${dto.writer}">
+      </div>
+
+      <textarea name="content" id="editor" th:text="${dto.content}">
+
+      </textarea>
+
+      <div class="my-4">
+        <div class="float-none">
+          <button type="submit" class="btn btn-primary submitBtn" th:href="|@{/modify(bno=${dto.bno})}|">
+              수정하기
+          </button>
+<!--          <button type="reset" class="btn btn-secondary">출간하기</button>-->
+        </div>
+      </div>
+    </form>
+
+  </div>
+
+  <script src="https://cdn.ckeditor.com/ckeditor5/36.0.1/classic/ckeditor.js"></script>
+
+</div>
+
+<script layout:fragment="script" th:inline="javascript">
+
+  ClassicEditor
+    .create(document.querySelector('#editor'))
+    .catch( error => {
+        console.error(error);
+    })
+
+  const errors = [[${errors}]];
+  console.log(errors)
+</script>
