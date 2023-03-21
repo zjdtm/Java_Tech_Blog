@@ -52,4 +52,34 @@ public class BoardController {
         return "redirect:";
     }
 
+    @GetMapping({"/read", "/modify"})
+    public void read(Long bno, PageRequestDTO pageRequestDTO, Model model) {
+
+        BoardDTO boardDTO = boardService.findOne(bno);
+
+        model.addAttribute("dto", boardDTO);
+    }
+
+    @PostMapping("/modify")
+    public String modify(PageRequestDTO pageRequestDTO, @Valid BoardDTO boardDTO,
+                       BindingResult bindingResult, RedirectAttributes redirectAttributes){
+
+        if(bindingResult.hasErrors()) {
+            redirectAttributes.addFlashAttribute("errors", bindingResult.getAllErrors());
+            return "redirect:/modify?" + boardDTO.getBno();
+        }
+
+        boardService.updateBoard(boardDTO);
+
+        return "redirect:/read?bno=" + boardDTO.getBno();
+
+    }
+
+    @PostMapping("/remove")
+    public String remove(Long bno, RedirectAttributes redirectAttributes){
+        boardService.deleteBoard(bno);
+
+        return "redirect:/";
+    }
+
 }
