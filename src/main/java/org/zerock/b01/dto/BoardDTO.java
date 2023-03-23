@@ -3,14 +3,13 @@ package org.zerock.b01.dto;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.zerock.b01.domain.Member;
 
 import java.time.LocalDateTime;
 
 @Data
-@Builder
 @AllArgsConstructor
 @NoArgsConstructor
 public class BoardDTO {
@@ -24,11 +23,11 @@ public class BoardDTO {
     @NotEmpty(message = "내용은 비어있을 수 없습니다.")
     private String content;
 
-    @NotEmpty
-    private String writer;
+    private Member member;
 
     private LocalDateTime regDate;
 
     private LocalDateTime modDate;
+
 
 }

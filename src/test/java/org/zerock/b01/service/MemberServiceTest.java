@@ -21,7 +21,7 @@ class MemberServiceTest {
     MemberRepository memberRepository;
 
     @Test
-    public void member_register() throws Exception{
+    public void member_register() {
 
         // given
         Member member = new Member("겐지", "겐지@naver.com", "겐지123");
@@ -34,7 +34,7 @@ class MemberServiceTest {
     }
 
     @Test
-    public void member_duplicate() throws Exception {
+    public void member_duplicate() {
 
         // given
         Member member1 = new Member("윈스턴", "윈스턴@naver.com", "윈스턴123");
@@ -50,7 +50,7 @@ class MemberServiceTest {
     }
 
     @Test
-    public void member_change() throws Exception {
+    public void member_change() {
 
         // given
         Member member = new Member("윈스턴", "윈스턴@naver.com", "윈스턴123");

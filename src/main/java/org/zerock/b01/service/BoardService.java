@@ -3,16 +3,17 @@ package org.zerock.b01.service;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.zerock.b01.domain.Board;
 import org.zerock.b01.dto.BoardDTO;
 import org.zerock.b01.dto.PageRequestDTO;
+import org.zerock.b01.dto.PageResponseDTO;
 import org.zerock.b01.repository.BoardRepository;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 
 @Service
@@ -26,7 +27,7 @@ public class BoardService {
     @Transactional
     public Long register(BoardDTO boardDTO) {
 
-        Board board = modelMapper.map(boardDTO, Board.class);
+        Board board = Board.toSaveEntity(boardDTO);
 
         Long bno = boardRepository.save(board).getBno();
 
@@ -60,12 +61,41 @@ public class BoardService {
         boardRepository.deleteById(bno);
     }
 
-    public Page<Board> searchBoard(PageRequestDTO pageRequestDTO){
+    public PageResponseDTO<BoardDTO> list(PageRequestDTO pageRequestDTO){
 
-        PageRequest pageRequest = PageRequest.of(pageRequestDTO.getPage(), pageRequestDTO.getSize());
+        String keyword = pageRequestDTO.getKeyword();
+        Pageable pageable = pageRequestDTO.getPageable("bno");
 
-        return boardRepository.searchAll(pageRequestDTO.getKeyword(), pageRequest);
+        Page<Board> result = boardRepository.searchAll(keyword, pageable);
 
+        List<BoardDTO> dtoList = result.getContent().stream().map(board -> modelMapper.map(board, BoardDTO.class)).collect(Collectors.toList());
+
+        return PageResponseDTO.<BoardDTO>withAll()
+                .pageRequestDTO(pageRequestDTO)
+                .dtoList(dtoList)
+                .total((int) result.getTotalElements())
+                .build();
     }
+
+    public Page<Board> apiList(PageRequestDTO pageRequestDTO){
+
+        String keyword = pageRequestDTO.getKeyword();
+        Pageable pageable = pageRequestDTO.getPageable("bno");
+
+        Page<Board> result = boardRepository.searchAll(keyword, pageable);
+
+        return result;
+    }
+
+//    public Slice<Board> apiSlice(){
+//
+//        String keyword = pageRequestDTO.getKeyword();
+//        Pageable pageable = pageRequestDTO.getPageable("bno");
+//
+//        Slice<Board> result = boardRepository.searchSlice(keyword, pageable);
+//
+//        return result;
+//
+//    }
 
 }

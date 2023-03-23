@@ -4,7 +4,10 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
+import org.zerock.b01.dto.BoardDTO;
 
+import static jakarta.persistence.CascadeType.ALL;
+import static jakarta.persistence.FetchType.LAZY;
 import static lombok.AccessLevel.PROTECTED;
 
 @Entity
@@ -14,7 +17,7 @@ import static lombok.AccessLevel.PROTECTED;
 public class Board extends BaseEntity{
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue
     @Column(name = "board_id ")
     private Long bno;
 
@@ -22,35 +25,25 @@ public class Board extends BaseEntity{
 
     private String content;
 
-    @Column(name = "board_like")
-    private int like;
+    @ManyToOne(fetch = LAZY, cascade = ALL)
+    @JoinColumn(name = "member_id")
+    private Member member;
 
-    private int views;
-
-//    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-//    @JoinColumn(name = "member_id")
-//    private Member member;
-
-    public Board(String title, String content) {
+    public void createBoard (String title, String content, Member member) {
         this.title = title;
         this.content = content;
+        this.member = member;
+    }
+
+    public static Board toSaveEntity(BoardDTO boardDTO) {
+        Board board = new Board();
+        board.createBoard(boardDTO.getTitle(), boardDTO.getContent(), boardDTO.getMember());
+        return board;
     }
 
     public void change(String title, String content){
         this.title = title;
         this.content = content;
-    }
-
-    public void notLike(){
-        this.like += 1;
-    }
-
-    public void like(){
-        this.like -= 1;
-    }
-
-    public void views(){
-        views = views + 1;
     }
 
 }
