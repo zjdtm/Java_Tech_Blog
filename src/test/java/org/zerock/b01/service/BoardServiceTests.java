@@ -8,8 +8,6 @@ import org.springframework.transaction.annotation.Transactional;
 import org.zerock.b01.domain.Board;
 import org.zerock.b01.domain.Member;
 import org.zerock.b01.dto.BoardDTO;
-import org.zerock.b01.dto.PageRequestDTO;
-import org.zerock.b01.dto.PageResponseDTO;
 
 import java.util.List;
 
@@ -37,12 +35,14 @@ public class BoardServiceTests {
         boardDTO.setContent("안녕하세요 게시판에 온 것을 환영합니다.");
         boardDTO.setMember(member);
 
+        Board board = Board.toSaveEntity(boardDTO);
+
         // when
         memberService.join(member);
 
-        Long boardId = boardService.register(boardDTO);
+        Long boardId = boardService.register(board);
 
-        BoardDTO findBoard = boardService.findOne(boardId);
+        Board findBoard = boardService.findOne(boardId);
 
         // then
         assertThat(findBoard.getMember()).isEqualTo(member);
@@ -60,15 +60,17 @@ public class BoardServiceTests {
         boardDTO.setContent("안녕하세요 게시판에 온 것을 환영합니다.");
         boardDTO.setMember(member);
 
+        Board board = Board.toSaveEntity(boardDTO);
+
         // when
         Long memberId = memberService.join(member);
 
-        Long bno = boardService.register(boardDTO);
+        Long bno = boardService.register(board);
 
-        BoardDTO findBoard = boardService.findOne(bno);
+        Board findBoard = boardService.findOne(bno);
 
         // then
-        assertThat(findBoard.getTitle()).isEqualTo(boardDTO.getTitle());
+        assertThat(findBoard.getTitle()).isEqualTo(board.getTitle());
         assertThat(memberService.findOne(memberId)).isEqualTo(member);
         assertThat(boardService.findBoards().size()).isEqualTo(1);
 
@@ -92,14 +94,17 @@ public class BoardServiceTests {
         boardDTO2.setContent("안녕하세요 게시판에 온 것을 환영합니다.");
         boardDTO2.setMember(member2);
 
+        Board board1 = Board.toSaveEntity(boardDTO1);
+        Board board2 = Board.toSaveEntity(boardDTO2);
+
         // when
         memberService.join(member1);
 
-        boardService.register(boardDTO1);
+        boardService.register(board1);
 
         memberService.join(member2);
 
-        boardService.register(boardDTO2);
+        boardService.register(board2);
 
         List<Board> boards = boardService.findBoards();
 
@@ -120,7 +125,9 @@ public class BoardServiceTests {
         boardDTO.setContent("안녕하세요 게시판에 온 것을 환영합니다.");
         boardDTO.setMember(member1);
 
-        Long boardId = boardService.register(boardDTO);
+        Board board = Board.toSaveEntity(boardDTO);
+
+        Long boardId = boardService.register(board);
 
         // when
         BoardDTO updateBoard = new BoardDTO();
@@ -130,7 +137,7 @@ public class BoardServiceTests {
 
         Long updatedBoardId = boardService.updateBoard(updateBoard);
 
-        BoardDTO findBoard = boardService.findOne(updatedBoardId);
+        Board findBoard = boardService.findOne(updatedBoardId);
 
         // then
         assertThat(findBoard.getTitle()).isEqualTo(updateBoard.getTitle());
@@ -149,10 +156,11 @@ public class BoardServiceTests {
         boardDTO.setContent("나신입의 게시물 내용");
         boardDTO.setMember(member);
 
-        // when
+        Board board = Board.toSaveEntity(boardDTO);
 
+        // when
         memberService.join(member);
-        Long boardId = boardService.register(boardDTO);
+        Long boardId = boardService.register(board);
 
         boardService.deleteBoard(boardId);
 

@@ -25,9 +25,7 @@ public class BoardService {
     private final BoardRepository boardRepository;
 
     @Transactional
-    public Long register(BoardDTO boardDTO) {
-
-        Board board = Board.toSaveEntity(boardDTO);
+    public Long register(Board board) {
 
         Long bno = boardRepository.save(board).getBno();
 
@@ -39,12 +37,10 @@ public class BoardService {
         return boardRepository.findAll();
     }
 
-    public BoardDTO findOne(Long boardId) {
+    public Board findOne(Long boardId) {
         Board board = boardRepository.findById(boardId).orElseThrow(() -> new IllegalArgumentException("board doesn't exist"));
 
-        BoardDTO boardDTO = modelMapper.map(board, BoardDTO.class);
-
-        return boardDTO;
+        return board;
     }
 
     @Transactional
