@@ -4,9 +4,12 @@ import lombok.extern.log4j.Log4j2;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.transaction.annotation.Transactional;
 import org.zerock.b01.domain.Board;
 import org.zerock.b01.domain.Member;
 import org.zerock.b01.domain.Reply;
+import org.zerock.b01.domain.Role;
+import org.zerock.b01.dto.BoardDTO;
 
 import java.util.List;
 
@@ -14,7 +17,11 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 @SpringBootTest
 @Log4j2
+@Transactional
 public class ReplyServiceTests {
+
+    @Autowired
+    MemberService memberService;
 
     @Autowired
     BoardService boardService;
@@ -25,53 +32,62 @@ public class ReplyServiceTests {
     @Test
     public void reply_register() {
         // given
-        Member member = new Member("트레이서", "trace@naver.com", "trace12#$");
-        Board board = new Board("오버워치 게임에 관한 제목", "오버워치 게임은 ....", member);
+        Member member = new Member("김신입", "김신입@naver.com", "12345", Role.USER);
 
-        Reply reply1 = new Reply(board, "오버워치는 재밌어요!!");
-        Reply reply2 = new Reply(board, "그님티");
-        Reply reply3 = new Reply(board, "오버워치 랭커입니다 답변 주세요");
+        BoardDTO boardDTO = new BoardDTO();
+        boardDTO.setTitle("김신입의 게시물 제목");
+        boardDTO.setContent("김신입의 게시물 내용");
+        boardDTO.setMember(member);
+
+        Board board = Board.toSaveEntity(boardDTO);
+
+        memberService.join(member);
+
+        Long boardId = boardService.register(board);
 
         // when
-        Long board_id = boardService.register(board);
-        replyService.register(reply1);
-        replyService.register(reply2);
-        replyService.register(reply3);
+        Board findBoard = boardService.findOne(boardId);
 
-        List<Reply> replies = replyService.findReplies(board_id);
+        Reply reply = new Reply(findBoard, "김신입님 안녕하세요?");
+
+        replyService.register(reply);
+
+        List<Reply> replies = replyService.findReplies(boardId);
 
         // then
-        assertThat(replies.size()).isEqualTo(3);
+        assertThat(replies).extracting("replyContent").containsExactly("김신입님 안녕하세요?");
 
     }
 
     @Test
     public void reply_update() {
         // given
-        Member member = new Member("트레이서", "trace@naver.com", "trace12#$");
-        Board board = new Board("오버워치 게임에 관한 제목", "오버워치 게임은 ....", member);
+        Member member = new Member("김신입", "김신입@naver.com", "12345", Role.USER);
 
-        Reply reply1 = new Reply(board, "오버워치는 재밌어요!!");
-        Reply reply2 = new Reply(board, "그님티");
-        Reply reply3 = new Reply(board, "오버워치 랭커입니다 답변 주세요");
+        BoardDTO boardDTO = new BoardDTO();
+        boardDTO.setTitle("김신입의 게시물 제목");
+        boardDTO.setContent("김신입의 게시물 내용");
+        boardDTO.setMember(member);
+
+        Board board = Board.toSaveEntity(boardDTO);
+
+        memberService.join(member);
+
+        Long boardId = boardService.register(board);
 
         // when
-        Long board_id = boardService.register(board);
-        replyService.register(reply1);
-        replyService.register(reply2);
-        replyService.register(reply3);
+        Board findBoard = boardService.findOne(boardId);
 
-        List<Reply> replies = replyService.findReplies(board_id);
+        Reply reply = new Reply(findBoard, "김신입님 안녕하세요?");
 
-        replies.get(0).change("롤은 재밌어요!!!");
-        replies.get(1).change("티어는 중요치 않아요");
-        replies.get(2).change("롤 랭커입니다.");
+        replyService.register(reply);
 
+        List<Reply> replies = replyService.findReplies(boardId);
+
+        replies.get(0).change("김신입님 안녕안하세요?");
 
         // then
-        assertThat(replies.get(0).getReplyContent()).isEqualTo("롤은 재밌어요!!!");
-        assertThat(replies.get(1).getReplyContent()).isEqualTo("티어는 중요치 않아요");
-        assertThat(replies.get(2).getReplyContent()).isEqualTo("롤 랭커입니다.");
+        assertThat(replies.get(0).getReplyContent()).isEqualTo("김신입님 안녕안하세요?");
     }
 
 

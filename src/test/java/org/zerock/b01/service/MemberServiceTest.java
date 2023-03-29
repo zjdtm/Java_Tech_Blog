@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.transaction.annotation.Transactional;
 import org.zerock.b01.domain.Member;
+import org.zerock.b01.domain.Role;
 import org.zerock.b01.repository.MemberRepository;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -24,7 +25,7 @@ class MemberServiceTest {
     public void member_register() {
 
         // given
-        Member member = new Member("겐지", "겐지@naver.com", "겐지123");
+        Member member = new Member("겐지", "겐지@naver.com", "겐지123", Role.USER);
 
         // when
         Long savedId = memberService.join(member);
@@ -37,8 +38,8 @@ class MemberServiceTest {
     public void member_duplicate() {
 
         // given
-        Member member1 = new Member("윈스턴", "윈스턴@naver.com", "윈스턴123");
-        Member member2 = new Member("윈스턴", "윈스턴@naver.com", "윈스턴123");
+        Member member1 = new Member("윈스턴", "윈스턴@naver.com", "윈스턴123", Role.USER);
+        Member member2 = new Member("윈스턴", "윈스턴@naver.com", "윈스턴123", Role.USER);
 
         // when
         memberService.join(member1);
@@ -53,7 +54,7 @@ class MemberServiceTest {
     public void member_change() {
 
         // given
-        Member member = new Member("윈스턴", "윈스턴@naver.com", "윈스턴123");
+        Member member = new Member("윈스턴", "윈스턴@naver.com", "윈스턴123", Role.USER);
 
         // when
         Long savedId = memberService.join(member);

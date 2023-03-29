@@ -7,6 +7,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.transaction.annotation.Transactional;
 import org.zerock.b01.domain.Board;
 import org.zerock.b01.domain.Member;
+import org.zerock.b01.domain.Role;
 import org.zerock.b01.dto.BoardDTO;
 
 import java.util.List;
@@ -28,7 +29,7 @@ public class BoardServiceTests {
     public void testRegister(){
 
         // given
-        Member member = new Member("관리자", "관리자@gmail.com", "1234");
+        Member member = new Member("관리자", "관리자@gmail.com", "1234", Role.USER);
 
         BoardDTO boardDTO = new BoardDTO();
         boardDTO.setTitle("안녕하세요");
@@ -53,7 +54,7 @@ public class BoardServiceTests {
     public void testFindOne(){
 
         // given
-        Member member = new Member("나신입", "나신입@gmail.com", "5678");
+        Member member = new Member("나신입", "나신입@gmail.com", "5678", Role.USER);
 
         BoardDTO boardDTO = new BoardDTO();
         boardDTO.setTitle("안녕하세요");
@@ -80,14 +81,14 @@ public class BoardServiceTests {
     public void testFindAll(){
 
         // given
-        Member member1 = new Member("나신입", "나신입@gmail.com", "5678");
+        Member member1 = new Member("나신입", "나신입@gmail.com", "5678", Role.USER);
 
         BoardDTO boardDTO1 = new BoardDTO();
         boardDTO1.setTitle("안녕하세요");
         boardDTO1.setContent("안녕하세요 게시판에 온 것을 환영합니다.");
         boardDTO1.setMember(member1);
 
-        Member member2 = new Member("가신입", "가신입@gmail.com", "5678");
+        Member member2 = new Member("가신입", "가신입@gmail.com", "5678", Role.USER);
 
         BoardDTO boardDTO2 = new BoardDTO();
         boardDTO2.setTitle("안녕하세요");
@@ -116,7 +117,7 @@ public class BoardServiceTests {
     public void testUpdate() {
 
         // given
-        Member member1 = new Member("나신입", "나신입@gmail.com", "5678");
+        Member member1 = new Member("나신입", "나신입@gmail.com", "5678", Role.USER);
 
         memberService.join(member1);
 
@@ -149,7 +150,7 @@ public class BoardServiceTests {
     public void testDelete(){
 
         // given
-        Member member = new Member("나신입", "나신입@gmail.com", "5678");
+        Member member = new Member("나신입", "나신입@gmail.com", "5678", Role.USER);
 
         BoardDTO boardDTO = new BoardDTO();
         boardDTO.setTitle("나신입의 게시물 제목");
