@@ -5,7 +5,8 @@
 프로젝트를 계획하게 되었습니다. 프로젝트는 [*자바 웹 개발 워크북*]에 있는 내용들을 참고하였습니다.
 
 # ERD
-![Board](https://user-images.githubusercontent.com/35757620/223757215-b69ed03d-aca6-4f3e-9735-084179fa4198.png)
+![Board](https://user-images.githubusercontent.com/35757620/231194903-4456f4ae-7216-4ebb-822c-fbf3e7542e0c.png)
+
 
 # :file_folder:TECOMOG 디렉토리 구조
 ```bash
